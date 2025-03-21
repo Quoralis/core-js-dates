@@ -17,8 +17,9 @@
  * '01 Jan 1970 00:00:00 UTC' => 0
  * '04 Dec 1995 00:12:00 UTC' => 818035920000
  */
-function dateToTimestamp(/* date */) {
-  throw new Error('Not implemented');
+function dateToTimestamp(date) {
+  const now = new Date(date);
+  return now.getTime();
 }
 
 /**
@@ -31,8 +32,14 @@ function dateToTimestamp(/* date */) {
  * Date(2023, 5, 1, 8, 20, 55) => '08:20:55'
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
-function getTime(/* date */) {
-  throw new Error('Not implemented');
+function getTime(date) {
+  let H = date.getHours();
+  if (H < 10) H = `0${H}`;
+  let M = date.getMinutes();
+  if (M < 10) M = `0${M}`;
+  let S = date.getSeconds();
+  if (S < 10) S = `0${S}`;
+  return `${H}:${M}:${S}`;
 }
 
 /**
@@ -46,8 +53,20 @@ function getTime(/* date */) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+  const data = new Date(date);
+  const indexDay = data.getDay() - 1;
+  if (indexDay === -1) return 'Sunday';
+  return daysOfWeek[indexDay];
 }
 
 /**
@@ -61,8 +80,14 @@ function getDayName(/* date */) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const curDate = new Date(date);
+  const curDay = curDate.getDay();
+  const diff = curDay === 5 ? 7 : (5 - curDay + 7) % 7;
+
+  curDate.setDate(curDate.getDate() + diff);
+
+  return curDate;
 }
 
 /**
@@ -76,8 +101,10 @@ function getNextFriday(/* date */) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  const date = new Date(year, month, 0);
+
+  return date.getDate();
 }
 
 /**
